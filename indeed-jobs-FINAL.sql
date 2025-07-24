@@ -45,6 +45,7 @@ SELECT
 	ROUND(AVG(star_rating), 2) AS avg_rating
 FROM data_analyst_jobs
 WHERE location IS NOT NULL
+	AND star_rating IS NOT NULL
 GROUP BY 
 	location
 ORDER BY avg_rating DESC;
@@ -92,28 +93,21 @@ ORDER BY avg_rating DESC;
 -- 11.	Find all the job titles that contain the word ‘Analyst’. How many different job titles are there? - 1669
 
 SELECT
-	COUNT(title)
+	COUNT(DISTINCT title)
 FROM data_analyst_jobs
 WHERE title 
 ILIKE '%analyst%';
 
--- 12.	How many different job titles do not contain either the word ‘Analyst’ or the word ‘Analytics’? What word do these positions have in common? - 39, "Data"
+-- 12.	How many different job titles do not contain either the word ‘Analyst’ or the word ‘Analytics’? What word do these positions have in common? - 39, "Tableau"
 
 SELECT
 	COUNT(title)
 FROM data_analyst_jobs
 WHERE
-	title NOT LIKE '%Analyst%'
+	title NOT ILIKE '%Analyst%'
 	AND
-	title NOT LIKE '%Analytics%';
+	title NOT ILIKE '%Analytics%';
 
-SELECT
-	title
-FROM data_analyst_jobs
-WHERE
-	title ILIKE '%Analyst%'
-	OR
-	title ILIKE '%Analytics%';
 
 -- **BONUS:**
 -- You want to understand which jobs requiring SQL are hard to fill. Find the number of jobs by industry (domain) that require SQL and have been posted longer than 3 weeks. 
